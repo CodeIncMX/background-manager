@@ -1,0 +1,17 @@
+@import '../scss/backgrounds.scss';
+
+body {
+  margin: 0;
+}
+
+.hero {
+  width: 100vw;
+  height: 100vh;
+
+  $imgList__breakpoints: md;
+  @include set-background-image-all-versions('./images/tech-image', $imgList__breakpoints) {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center ;
+  }
+}

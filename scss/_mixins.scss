@@ -1,0 +1,35 @@
+@import './tokens';
+@import '@codeinc.mx/responsive-system/scss/responsive';
+
+@mixin background-image-with-retina($imagePath, $ext) {
+  background-image: url($imagePath + '.' + $ext);
+  @content;
+  @media #{$retina} {
+    background-image: url($imagePath + '@2x' + '.' + $ext);
+    @content;
+  }
+}
+
+@mixin background-image-webp-and-original-with-retina($imagePath, $ext) {
+  @include background-image-with-retina($imagePath, 'webp') { @content; }
+  &.webp--disabled {  // IMPORTANT @see webpack/plugins/css.js if class name is changed
+    @include background-image-with-retina($imagePath, $ext) { @content; }
+  }
+}
+
+/*
+  Set background images in webp and original format and
+  all their responsive versions and retina versions
+*/
+@mixin set-background-image-all-versions($mobileFirstImage__fileName, $imgList__breakpoints: '' ,$ext: 'png') {
+  @if($ext == 'webp') { @error 'MOBILE-FIRST-IMAGE\'S EXTENSION FILE MUST NOT BE "webp" FORMAT. IS REQUIRED A DIFFERENT EXTENSION FILE FOR THOSE WEB NAVIGATORS THAT DOESN\'T ACCEPT webp FORMAT'; }
+  @include background-image-webp-and-original-with-retina($mobileFirstImage__fileName, $ext) { @content; }
+  @if ($imgList__breakpoints != ''){
+    @each $breakpoint in $imgList__breakpoints {
+      $mobileFirstImage__fileName--responsive: $mobileFirstImage__fileName + '-' + $breakpoint;
+      @include set-mediaquery($breakpoint){
+        @include background-image-webp-and-original-with-retina($mobileFirstImage__fileName--responsive, $ext) { @content; }
+      }
+    }
+  }
+}
