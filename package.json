@@ -1,6 +1,6 @@
 {
   "name": "@codeinc.mx/background-manager",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A great css background manager to use webp and original format image with original and 2x size",
   "main": "scss/backgrounds.scss",
   "directories": {
@@ -30,6 +30,7 @@
     "webpack-dev-server": "3.10.3"
   },
   "dependencies": {
-    "@codeinc.mx/responsive-system": "^0.1.0"
+    "@codeinc.mx/responsive-system": "^0.1.0",
+    "supports-webp": "2.0.1"
   }
 }
